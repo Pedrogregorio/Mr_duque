@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>..:: Mr Duque ::..</title>
+    <link rel="stylesheet" href="css/uikit.min.css"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/uikit.min.js"></script>
+    <script src="js/uikit-icons.min.js"></script>
+    <link rel="stylesheet" href="css/estilo.css">
+
+    <script>
+    $(document).ready( function(){
+        $('#btn-voltar').click(function() {
+            $.ajax({
+                url: '/dashboard',
+                method: "get",
+                success: function(data) {
+                    $('#acao').html(data);
+                }
+            })
+        })
+        $('#btn-con').click(function() {
+            $.ajax({
+                url: '/allNorm',
+                method: "get",
+                success: function(data) {
+                    $('#tabela').html(data);
+                }
+            })
+        })
+        
+        // alert('hellow')        
+        $('#btn-laranja').click(function() {
+            $.ajax({
+                url: '/prioridadeLaranjaNorm',
+                method: "get",
+                success: function(data) {
+                    $('#tabela').html(data);
+                }
+            })
+        })
+        $('#btn-vermelho').click(function() {
+            $.ajax({
+                url: '/prioridadeVermelhoNorm',
+                method: "get",
+                success: function(data) {
+                    $('#tabela').html(data);
+                }
+            })
+        })
+        $('#btn-verde').click(function() {
+            $.ajax({
+                url: '/prioridadeVerdeNorm',
+                method: "get",
+                success: function(data) {
+                    $('#tabela').html(data);
+                }
+            })
+        })
+    })
+</script>
+
+</head>
+<body>
+    <%- include(menu) %>
+    <div class="uk-container">
+        <div class="uk-padding uk-margin uk-card uk-align-center uk-card-default uk-card-body uk-margin" style="color:black; background-color: #e2dada; border-radius: 20px; box-shadow: -1px 1px 20px 0px;">    
+            <div id="acoes"><%- include(page) %></div> 
+        </div>
+    </div>
+        <script src="js/notificacao.js"></script>
+        <script src="js/cpf.js"></script>
+        <script src="js/moeda.js"></script>
+        <script src="js/banco.js"></script>
+    </body>
+</html>

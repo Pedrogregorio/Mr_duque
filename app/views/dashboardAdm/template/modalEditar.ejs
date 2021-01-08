@@ -1,0 +1,70 @@
+<div class="uk-margin uk-width-1-2 uk-align-center uk-text-secondary">
+    <form action="/atualizaCliente" method="post" class="uk-grid-small" uk-grid>
+    
+        <% for (let i = 0; i < dados.length; i++) { %>
+            <div class="uk-margin uk-width-1-1">
+                <label class="uk-form-label" for="form-stacked-text">Nome Cliente:</label>
+                <input type="text" class="uk-input" name="nome_cliente" value="<%= dados[i].nome_cliente %>">
+                <input type="hidden" name="id" value="<%= dados[i].id %>">
+            </div>
+            <div class="uk-margin uk-width-1-1">
+                <label class="uk-form-label" for="form-stacked-text">CPF:</label>
+                <input class="uk-input" name="cpf_cliente" value="<%= dados[i].cpf_cliente %>" type="text" placeholder="CPF:" id="cpfEditar" type="text" onkeyup="cpfCheckEditar(this)" maxlength="14" onkeydown="javascript: fMasc( this, mCPF );">
+                <span id="cpfResponseEditar"></span>
+            </div>
+            <div class="uk-margin uk-width-1-2@s">
+                <label class="uk-form-label" for="form-stacked-text">Numero Proposta:</label>
+                <input type="text" class="uk-input" name="numero_proposta" value="<%= dados[i].numero_proposta %>">
+            </div>
+            <div class="uk-margin uk-width-1-2@s">
+                <label class="uk-form-label" for="form-stacked-text">Banco Portado</label>
+                <input type="text" class="uk-input" name="banco_portado" value="<%= dados[i].banco_portado %>" name="banco_portado" onkeyup="banco(this)" placeholder="Banco Portado">
+                <span id="span-banco"></span>
+            </div>
+            <div class="uk-margin uk-width-1-2@s">
+                <label class="uk-form-label" for="form-stacked-text">Valor Proposta:</label>
+                <input type="text" class="uk-input" name="valor_proposta" maxlength="9" id="valorCadastro" onkeyup="formatarMoedaCadastroValor()" value="<%= dados[i].valor_proposta %>">
+            </div>
+            <div class="uk-margin uk-width-1-2@s">
+                <label class="uk-form-label" for="form-stacked-text">Parcela Proposta:</label>
+                <input type="text" class="uk-input" name="valor_parcela" maxlength="6" id="parcelaCadastro" onkeyup="formatarMoedaCadastroParcela()" value="<%= dados[i].parcela_proposta %>">
+            </div>
+            <div class="uk-margin uk-width-1-2@s">
+                <label class="uk-form-label" for="form-stacked-text">Data Inclusao:</label>
+                <input type="date" class="uk-input" name="data_inclusao" value="<%= dados[i].data_inclusao %>">
+            </div>
+            <div class="uk-margin uk-width-1-2@s">
+                <label class="uk-form-label" for="form-stacked-text">Agente:</label>
+                <select name="id_agente_banco" class="uk-select">
+                    <% for (let j = 0; j < agente.length; j++) { %>
+                        <% if (dados[i].id_agente_banco == agente[j].id_agente_banco) { %>
+                            <option value="<%= agente[j].id_agente_banco %>" selected><%= agente[j].nome_agente %> - <%= agente[j].banco %></option>
+                        
+                    <% } else { %>
+                        <option value="<%= agente[j].id_agente_banco %>"><%= agente[j].nome_agente %> - <%= agente[j].banco %></option>
+                    <% } } %>
+                </select>
+            </div>
+            <div class="uk-margin uk-width-1-1">
+                <label class="uk-form-label" for="form-stacked-text">Status Proposta:</label>
+                <select class="uk-select" name="id_status_proposta" id="form-horizontal-select">
+                    <% for (let j = 0; j < status.length; j++) { %>
+                        
+                        <% if (status[j].id_status_proposta == dados[i].id_status_proposta) { %>
+                            <option value="<%= status[j].id_status_proposta %>" selected><%= status[j].nome_status %> - <%= status[j].banco %></option>
+                        
+                    <% } else { %>
+                        <option value="<%= status[j].id_status_proposta %>"><%= status[j].nome_status %> - <%= status[j].banco %></option>
+                    <% } } %>
+                </select>
+                
+            </div>
+            <div>
+                <button class="btn-bb btn-bb-azul" type="submit">Salvar</button>
+                
+                <button class="btn-bb btn-bb-vermelho">Cancelar</button>
+            </div>
+    
+        <% } %>
+    </form>
+    </div>

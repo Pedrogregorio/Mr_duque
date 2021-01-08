@@ -1,0 +1,61 @@
+<a href="/dashboardAdm" class="btn-bb btn-bb-azul" uk-icon="arrow-left"> Voltar </a>
+<div class="uk-overflow-auto">
+    <div>    
+    <table class="uk-table uk-table-responsive uk-table-divider">
+            <thead>
+                <tr class="uk-text-center">
+                </tr>
+            </thead>
+            <tbody>               
+                <tr>
+                    <td><h1>Usuarios:</h1></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <% for (let i = 0; i < usuario_maneger.length; i++) { %>
+                <% 
+                    var tipo = ""
+                    switch (parseInt(usuario_maneger[i].tipo)) {
+                        case 1: tipo = 'ADM'; break;
+                        case 2: tipo = 'Normal'; break;
+                    } 
+                %>
+                <tr>
+                    <td><%= usuario_maneger[i].nome_usuario %> (<%= tipo %>)</td>
+                    <td> **********</td>
+                    <td>
+                        <a href="/deletar_usuario?id=<%= usuario_maneger[i].id_usuario %>" class="btn-bb-vermelho-del" uk-icon="icon: trash"></a>
+                    </td>
+                </tr>   
+                <% } %>
+                <tr>
+                    <td><h1>Agente:</h1></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <% for (let i = 0; i < agente_maneger.length; i++) { %>
+                <tr>
+                    <td><%= agente_maneger[i].nome_agente %>  </td>
+                    <td><%= agente_maneger[i].banco %></td>
+                    <td>
+                        <a href="/deletar_agente?id=<%= agente_maneger[i].id_agente_banco %>" class="btn-bb-vermelho-del" uk-icon="icon: trash"></a>
+                    </td>
+                </tr>
+                <% } %>
+        <tr>
+            <td><h1>Status:</h1></td>
+            <td></td>
+            <td></td>
+        </tr>
+                <% for (let i = 0; i < status_maneger.length; i++) { %>
+                    <tr>
+                        <td><%= status_maneger[i].nome_status %></td>
+                        <td><%= status_maneger[i].banco %></td>
+                        <td>
+                            <a href="/deletar_status?id=<%= status_maneger[i].id_status_proposta %>" class="btn-bb-vermelho-del" uk-icon="icon: trash"></a>
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>    
+    </div>

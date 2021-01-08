@@ -1,0 +1,43 @@
+<h3 class="uk-text-center">Bem vindo ao sistema de controle de contrato da Mr. Duque!</h3>
+<hr>
+<div>
+    <div class="uk-margin uk-width-1-2 uk-align-center">
+        <form action="/consulta" method="post" class="uk-grid-small" uk-grid>
+            <div class="uk-margin uk-width-1-1">
+                <label class="uk-form-label" for="form-stacked-text">Nome Cliente:</label>
+                <input class="uk-input" name="nome_cliente" type="text" placeholder="Nome para Consultar..">
+            </div>
+            <div class="uk-margin uk-width-1-2@s">
+                <label class="uk-form-label" for="form-stacked-text">CPF Cliente:</label>
+                <input class="uk-input" name="cpf_cliente" onkeyup="cpfCheckConsulta(this)" maxlength="14" onkeydown="javascript: fMasc( this, mCPF );" id="cpf2" type="text" placeholder="Consultar CPF...">
+                <span id="cpfResponseConsulta"></span>
+            </div>
+            <div class="uk-margin uk-width-1-2@s">
+                <label class="uk-form-label" for="form-stacked-text">Agente Cliente:</label>
+                <select class="uk-select" name="id_agente_banco" id="form-horizontal-select">
+                    <option value="">.. TODOS ..</option>
+                    <% for (let i = 0; i < agente.length; i++) { %>
+                        <option value="<%= agente[i].id_agente_banco %>"><%= agente[i].nome_agente %> - <%= agente[i].banco %></option>
+                    <% } %>
+                </select>
+            </div>
+            <button class="btn-bb btn-bb-laranja uk-align-center" type="submit">Consultar Clientes<span class="uk-margin-small-right" uk-icon="database"></span></button> 
+            <button class="btn-bb btn-bb-azul uk-align-center" type="button" href="#modal-cadastro" uk-toggle>Cadastra Cliente <span class="uk-margin-small-right" uk-icon="plus"></span></button>
+        </form>
+        <div class="uk-margin uk-width-1-1 uk-text-center">
+                <button class="btn-bb btn-bb-verde" id="btn-verde"><span uk-icon="icon: clock"></span></button>
+                <button class="btn-bb btn-bb-laranja" id="btn-laranja"><span uk-icon="icon: clock"></span></button>
+                <button class="btn-bb btn-bb-vermelho" id="btn-vermelho"><span uk-icon="icon: clock"></span></button>
+                
+            
+        </div>
+        <button class="btn-bb btn-bb-cinza uk-align-center" id="btn-con">ALL</button>
+    </div>
+</div>
+<!-- Modal de formulario para cadastro de usuarios -->
+<%- include('./modalCadastrar.ejs') %>
+<hr>
+<!-- Listar Clientes Cadastrados no Banco de Dados -->
+<div id="tabela"><%- include('./clientes.ejs') %></div>
+
+

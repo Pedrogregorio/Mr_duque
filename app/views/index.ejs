@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" class="uk-background-top-left uk-background-cover" style="background-image: url(fundo3.jpg);"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/uikit.css">
+    <script src="js/uikit.js"></script>
+    <script src="js/uikit-icons.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="uk-container">
+        <div class="uk-position-center">
+        <% if (validacao.length > 0) {%>
+            <% for(var i = 0; i < validacao.length; i++){ %>
+            <div class="uk-alert-danger" uk-alert>
+                <a class="uk-alert-close" uk-close></a>
+                <p><%= validacao[i].msg%></p> 
+            </div>
+        <% } }%>
+        <div class="uk-card uk-card-default uk-padding" style="border-radius: 8px;">
+            
+            <h1>Login</h1>
+            <form action="/validacao" method="POST">
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <span class="uk-form-icon" uk-icon="icon: user"></span>
+                        <input class="uk-input uk-form-width-medium" name="nome" type="text" placeholder="Nome">
+                    </div>       
+                </div>
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
+                        <input class="uk-input uk-form-width-medium" name="senha" type="password" placeholder="Senha">
+                    </div>
+                </div>
+                <button type="submit" class="uk-button uk-button-primary">Entrar</button>
+            </form>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+ <!-- Modal Cadastrar -->
+ <div id="modal-cadastro" uk-modal>
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h2 class="uk-modal-title">Cadastrar Cliente</h2>
+        </div>
+        <div class="uk-modal-body">
+            <form action="/dashboard/cadastra_usuario" method="post" class="uk-grid-small" uk-grid>
+                <div class="uk-margin uk-width-1-1">
+                    <label class="uk-form-label" for="form-stacked-text">Nome:</label>
+                    <input class="uk-input" name="nome_cliente" type="text" placeholder="Nome:">
+                </div>
+                <div class="uk-margin uk-width-1-1">
+                    <label class="uk-form-label" for="form-stacked-text">CPF:</label>
+                    <input class="uk-input" name="cpf_cliente" type="text" placeholder="CPF:" id="cpfCadastrar" type="text" onkeyup="cpfCheckCadastrar(this)" maxlength="14" onkeydown="javascript: fMasc( this, mCPF );">
+                    <span id="cpfResponse"></span>
+                </div>
+                
+                <div class="uk-margin uk-width-1-2@s">
+                    <label class="uk-form-label" for="form-stacked-text">Valor Proposta:</label>
+                    <input class="uk-input" type="text" name="valor_proposta" placeholder="Proposta:" maxlength="9" id="valorCadastro" onkeyup="formatarMoedaCadastroValor()">
+                </div>
+                <div class="uk-margin uk-width-1-2@s">
+                    <label class="uk-form-label" for="form-stacked-text">Valor Parcela:</label>
+                    <input class="uk-input" type="text" name="valor_parcela" placeholder="Parcela:" maxlength="6" id="parcelaCadastro" onkeyup="formatarMoedaCadastroParcela()">
+                </div>
+                <div class="uk-margin uk-width-1-2@s">
+                    <label class="uk-form-label" for="form-stacked-text">Banco Portado</label>
+                    <input type="text" class="uk-input" name="banco_portado" onkeyup="banco(this)" placeholder="Banco Portado">
+                    <span id="span-banco"></span>
+                </div>
+                <div class="uk-margin uk-width-1-2@s">
+                    <label class="uk-form-label" for="form-stacked-text">Numero Proposta:</label>
+                    <input class="uk-input" type="text" name="numero_proposta" placeholder="Numero da Proposta">
+                </div>
+                <div class="uk-margin uk-width-1-2@s">
+                    <label class="uk-form-label" for="form-stacked-text">Banco/Agente</label>
+                    <select class="uk-select" name="id_agente_banco" id="form-horizontal-select">
+                        <% for (let i = 0; i < agente.length; i++) { %>
+                            <option value="<%= agente[i].id_agente_banco %>"><%= agente[i].nome_agente %> - <%= agente[i].banco %></option>
+                        <% } %>
+                        <!-- <option disabled="disabled" class="uk-text-bold">-- Banrisul --</option>
+                        <option value="6862LEANDR">6862LEANDR</option>
+                        <option value="6862THAYSA">6862THAYSA</option>
+                        <option value="6862THIAGO">6862THIAGO</option>
+                        <option value="6862KELLIR">6862KELLIR</option>
+                        <option value="6862FABIOA">6862FABIOA</option>
+                        <option value="6815EMERSO">6815EMERSO</option>
+                        <option value="6862HEITOR">6862HEITOR</option>
+                        <option value="6862FELIPE">6862FELIPE</option>
+                        <option value="6862FERNAN">6862FERNAN</option>
+                        <option value="6862WESLEY">6862WESLEY</option>
+                        <option value="5416THELMO">5416THELMO</option>
+                        <option value="5416JESSIC">5416JESSIC</option>
+                        <option value="5416GEOVAN">5416GEOVAN</option>
+                        
+                        <option disabled="disabled" class="uk-text-bold">-- DayCoval --</option>
+                        <option>Option 04</option>
+                        <option>Option 05</option>
+                        <option>Option 06</option>
+                        
+                        <option disabled="disabled" class="uk-text-bold">-- C6 --</option>
+                        <option>Option 07</option>
+                        <option>Option 08</option>
+                        <option>Option 09</option>
+                        
+                        <option disabled="disabled" class="uk-text-bold">-- Safra --</option>
+                        <option>Option 10</option>
+                        <option>Option 11</option>
+                        <option>Option 12</option>
+                        
+                        <option disabled="disabled" class="uk-text-bold">-- Panamericano --</option>
+                        <option>Option 13</option>
+                        <option>Option 14</option>
+                        <option>Option 15</option> -->
+                        
+                    </select>
+                </div>
+                <div class="uk-margin uk-width-1-2@s">
+                    <label class="uk-form-label" for="form-stacked-text">Data da Inclusao</label>
+                    <input class="uk-input" type="date" name="data_inclusao" placeholder="Data da Inclusao:">
+                </div>
+                <div class="uk-margin uk-width-1-1">
+                    <label class="uk-form-label" for="form-stacked-text">Status da proposta</label>
+                    <select class="uk-select" name="id_status_proposta" id="form-horizontal-select">
+                        <% for (let i = 0; i < status.length; i++) { %>
+                            <option value="<%= status[i].id_status_proposta %>"><%= status[i].nome_status %> - <%= status[i].banco %></option>
+                        <% } %>
+                    </select>
+                </div>
+                
+            
+            </div>
+                <div class="uk-modal-footer uk-text-right">
+                    <button class="uk-button uk-button-default uk-modal-close" type="button">Cancelar</button>
+                    <button class="uk-button uk-button-primary" type="submit">Salvar</button>
+                </div>
+            </form> 
+    </div>
+</div>

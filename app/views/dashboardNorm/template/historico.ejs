@@ -1,0 +1,31 @@
+<a href="/dashboard" class="btn-bb btn-bb-azul"> Voltar </a> 
+<hr>
+<table class="uk-table uk-table-hover uk-table-divider">
+    <thead>
+        <tr>
+            <th>Nome Cliente</th>
+            <th>Status </th>
+            <th>Data Auteração</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <% for (let i = 0; i < dados.length; i++) { %>
+
+        <tr>
+            <td><%= dados[i].nome_cliente %></td>
+            <td><%= dados[i].nome_status %></td>
+            <%
+                var date = new Date()
+                var teste = dados[i].data_modificacao
+                var formatarData = Intl.DateTimeFormat('pt-BR', {
+                    dateStyle: 'short',
+                    timeStyle: 'short'
+                })
+                var data_formatada = formatarData.format(teste)
+            %>
+            <td><%= data_formatada %></td>
+        </tr>
+        <% } %> 
+    </tbody>
+</table>
