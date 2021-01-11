@@ -18,6 +18,12 @@ module.exports = function(app) {
         res.redirect('/')
     })
 
+    app.get('/sair', function(req, res) {
+        req.session.destroy((err) => {
+            res.render('index', {validacao:{}})
+        })
+    })
+
     /*
         A parte de rotas sera dividida em Adm e Norm
 

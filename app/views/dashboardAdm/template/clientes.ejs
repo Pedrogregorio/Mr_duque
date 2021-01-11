@@ -10,6 +10,8 @@
                     <th class="uk-table-expand">CPF:</th>
                     <th>Agente:</th>
                     <th>Valor Proposta:</th>
+                    <th>Valor Parcela:</th>
+                    <th>Banco Portado:</th>
                     <th>Data Inclusao:</th>
                     <th>Status:</th>
                     <th>Ações:</th>
@@ -44,6 +46,8 @@
                         var cpf_cliente = dados[i].cpf_cliente
                         var nome_agente = dados[i].nome_agente
                         var valor_proposta = dados[i].valor_proposta
+                        var valor_parcela = dados[i].parcela_proposta
+                        var banco_portado = dados[i].nome_banco
                         var data_inclusao = dados[i].data_inclusao
                         var nome_status = dados[i].nome_status
 
@@ -56,6 +60,8 @@
                     <td><%= cpf_cliente %></td>
                     <td><%= nome_agente %></td>
                     <td><%= valor_proposta %></td>
+                    <td><%= valor_parcela %></td>
+                    <td><%= banco_portado %></td>
                     <td style="font-size: .79rem"><%= data_inclusao %></td>
                     <td><%= nome_status %></td>
                     <td>

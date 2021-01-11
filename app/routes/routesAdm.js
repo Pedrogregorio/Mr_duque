@@ -72,12 +72,6 @@ module.exports = function(app) {
         app.app.controllers.usuarioAdm.manager(app, req, res)
     })
 
-    app.get('/sair', function(req, res) {
-        req.session.destroy((err) => {
-            res.render('index', {validacao:{}})
-        })
-    })
-
     app.get('/prioridadeVerde', function(req, res) {
         app.app.controllers.usuarioAdm.prioridadeVerde(app, req, res)
     })
