@@ -1,6 +1,5 @@
 const app = require('./config/config')
-const port = 8000
 
-app.listen(process.env.PORT || port, function(){
+app.listen(process.env.PORT || 8000, function(){
     console.log('serve on')
 })
