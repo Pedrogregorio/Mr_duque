@@ -2,7 +2,8 @@ const { check } = require('express-validator')
 module.exports = function(app) {
     
     app.get('/', function(req, res) {
-        app.app.controllers.index.index(app, req, res)
+        res.send('OK')
+        // app.app.controllers.index.index(app, req, res)
     })
 
     app.post('/validacao', 
