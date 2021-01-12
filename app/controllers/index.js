@@ -1,7 +1,3 @@
-module.exports.index = function(app, req, res) {
-    res.render('index', {validacao:{}})
-}
-
 module.exports.validacao = function(app, req, res) {
     const { check, validationResult } = require('express-validator')
     const dadosForm = req.body
