@@ -20,7 +20,9 @@ consign()
     .include('app/routes')
     .then('app/models')
     .then('app/controllers')
-    .then('config/dbConfig.js')
+    .then('src/dbConfig.js')
     .into(app);
+
+app.listen(process.env.PORT || 8080)
 
 module.exports = app
