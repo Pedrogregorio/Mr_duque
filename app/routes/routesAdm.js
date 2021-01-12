@@ -1,12 +1,12 @@
 module.exports = function(app) {
     
     // Adm
-    app.use('/dashboardAdm', function(req, res, next) {
-        if(req.session.tipo == 2){
-            res.redirect('/dashboard')
-        }
-        next()
-    })
+    // app.use('/dashboardAdm', function(req, res, next) {
+    //     if(req.session.tipo == 2){
+    //         res.redirect('/dashboard')
+    //     }
+    //     next()
+    // })
 
     app.get('/dashboardAdm', function(req, res) {
         app.app.controllers.usuarioAdm.iniciaPage(app, req, res)

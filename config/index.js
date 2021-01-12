@@ -17,11 +17,10 @@ app.use(expressSession({
 }))
 
 consign()
-    .include('app/routes')
-    .then('app/models')
-    .then('app/controllers')
-    .then('config/dbConfig.js')
-    .into(app);
-
+    .include('./app/routes')
+    .then('./app/models')
+    .then('./app/controllers')
+    .then('./config/dbConfig.js')
+    .into(app)
 
 module.exports = app
