@@ -20,8 +20,7 @@ module.exports.validacao = function(app, req, res) {
                 }else if (req.session.tipo == 2){
                     res.redirect('/dashboard')
                 }
-            }
-            else{
+            }else{
                 res.render('index', {
                     validacao:[
                         {msg:'Erro: Usuario ou Senha incorretos'}
