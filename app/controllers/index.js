@@ -8,6 +8,7 @@ module.exports.validacao = function(app, req, res) {
         res.render('index', {validacao, dadosForm: dadosForm })
     }else{
          const conn = app.config.dbConfig
+         console.log('Chegamos Aqui no controllers')
          const indexDAO = new app.app.models.indexDAO(conn)
          console.log(indexDAO)
          indexDAO.autenticar(dadosForm, function(err, result) {
