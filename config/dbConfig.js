@@ -21,8 +21,6 @@ const connMysql = function(err) {
         if (err) {
           console.error('error connecting pohhhhhhhhhhha: ' + err.stack);
           return;
-        }else{
-            console.log('Conectado Birr')
         }
       })
       return connection    

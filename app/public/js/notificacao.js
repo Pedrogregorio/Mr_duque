@@ -24,10 +24,18 @@ var query = location.search.slice(1)
                 timeout: 5000
             });
         }
+        if (query == 'msg=del_cliente') {
+            UIkit.notification({
+                message: 'Cliente Deletado',
+                status: 'success',
+                timeout: 5000
+            });
+        }
+        
 
         if (query == 'msg=Usuario_del') {
             UIkit.notification({
-                message: 'Cliente Deletado',
+                message: 'Usuario Deletado',
                 status: 'success',
                 timeout: 5000
             });
@@ -40,6 +48,15 @@ var query = location.search.slice(1)
                 timeout: 5000
             });
         }
+        
+        if (query == 'msg=erro_del_cliente') {
+            UIkit.notification({
+                message: 'Erro Ao deletar o Cliente',
+                status: 'danger',
+                timeout: 5000
+            });
+        }
+
 
         if (query == 'msg=Agente_del') {
             UIkit.notification({

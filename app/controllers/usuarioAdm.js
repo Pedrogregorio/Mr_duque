@@ -2328,9 +2328,9 @@ module.exports.deletarCliente = function(app, req, res) {
    usuarioAdmDAO.delHistoricoClientes(_id, function(erro, resultado) {
       usuarioAdmDAO.delClientes(_id, function(err, result){
          if (result != undefined) {
-            res.redirect('/dashboardAdm?msg=erro_del_usuario')
+          res.redirect('/dashboardAdm?msg=del_cliente')
          }else{
-            res.redirect('/dashboardAdm?msg=Usuario_del')
+          res.redirect('/dashboardAdm?msg=erro_del_cliente')
          }
       }) 
    })
@@ -2344,9 +2344,9 @@ module.exports.deletarUsuario = function(app, req, res) {
     const usuarioAdmDAO = new app.app.models.usuarioAdmDAO(conn)
    usuarioAdmDAO.deletarUsuario(_id, function(err, result){
       if (result != undefined) {
-         res.redirect('/dashboardAdm?msg=erro_del_usuario')
+        res.redirect('/dashboardAdm?msg=Usuario_del')
       }else{
-         res.redirect('/dashboardAdm?msg=Usuario_del')
+        res.redirect('/dashboardAdm?msg=erro_del_usuario')
       }
    })
 }

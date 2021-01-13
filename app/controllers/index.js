@@ -1,4 +1,3 @@
-
 module.exports.validacao = function(app, req, res) {
     const { check, validationResult } = require('express-validator')
     const dadosForm = req.body
@@ -8,9 +7,7 @@ module.exports.validacao = function(app, req, res) {
         res.render('index', {validacao, dadosForm: dadosForm })
     }else{
          const conn = app.config.dbConfig
-         console.log('Chegamos Aqui no controllers')
          const indexDAO = new app.app.models.indexDAO(conn)
-         console.log(app.app)
          indexDAO.autenticar(dadosForm, function(err, result) {
             if(result[0] != undefined){
                 req.session.autorizado = true
