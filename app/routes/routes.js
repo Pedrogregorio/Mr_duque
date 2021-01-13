@@ -10,8 +10,8 @@ module.exports = function(app) {
 		check('nome', 'Preencha o campo Nome ').not().isEmpty(),
 		check('senha', 'Preencha o campo Senha ').not().isEmpty()
 	],
-    function(req, res) {
-        app.app.controllers.index.validacao(app, req, res)
+    function(req, res, next) {
+        app.app.controllers.index.validacao(app, req, res, next)
     })
     app.get('/validacao', function(req, res) {
         
