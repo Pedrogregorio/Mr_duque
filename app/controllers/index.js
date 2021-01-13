@@ -1,11 +1,5 @@
 module.exports.validacao = function(app, req, res) {
-    const { check, validationResult } = require('express-validator')
-    const dadosForm = req.body
-    const errors = validationResult(req);
-    const validacao = errors.array() 
-    if (!errors.isEmpty()) {
-        res.render('index', {validacao, dadosForm: dadosForm })
-    }else{
+    
          const conn = app.config.dbConfig
          const indexDAO = new app.app.models.indexDAO(conn)
          indexDAO.autenticar(dadosForm, function(err, result) {
@@ -28,5 +22,4 @@ module.exports.validacao = function(app, req, res) {
                 })
             }   
         });
-    }
 }
