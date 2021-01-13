@@ -3,7 +3,7 @@ const mysql = require('mysql')
 const connMysql = function(err) {
     const connection =  mysql.createConnection({
 
-        host: '50.116.112.120',
+        host: 'https://mr-duque.herokuapp.com/',
 		user: 'teren671_pedro',
 		password: 'BctR20m4b8',
 		database: 'teren671_mr_duque'

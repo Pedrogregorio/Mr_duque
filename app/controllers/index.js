@@ -8,6 +8,7 @@ module.exports.validacao = function(app, req, res) {
     }else{
          const conn = app.config.dbConfig
          const indexDAO = new app.app.models.indexDAO(conn)
+         console.log(indexDAO)
          indexDAO.autenticar(dadosForm, function(err, result) {
             if(result[0] != undefined){
                 req.session.autorizado = true
