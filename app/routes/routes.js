@@ -14,7 +14,6 @@ module.exports = function(app) {
 		check('senha', 'Preencha o campo Senha ').not().isEmpty()
 	],
     function(req, res) {
-        console.log(controllers)
         controllers.validacao(app, req, res)
     })
     app.get('/validacao', function(req, res) {
