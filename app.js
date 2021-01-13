@@ -1,5 +1,5 @@
 const express = require('express')
-const consign = require('consign')
+const load = require('express-load')
 const expressSession = require('express-session')
 const bodyParser = require('body-parser')
 
@@ -17,8 +17,8 @@ app.use(expressSession({
     resave: false
 }))
 
-consign()
-    .include('./app/routes')
+load()
+    .then('./app/routes')
     .then('./app/models')
     .then('./app/controllers')
     .then('./config/dbConfig.js')
