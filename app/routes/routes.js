@@ -5,7 +5,12 @@ module.exports = function(app) {
         res.render('index', {validacao:{}})
     })
 
-    app.post('/validacao', function(req, res) {
+    app.post('/validacao', 
+	[
+		check('nome', 'Preencha o campo Nome ').not().isEmpty(),
+		check('senha', 'Preencha o campo Senha ').not().isEmpty()
+	],
+    function(req, res) {
         app.app.controllers.index.validacao(app, req, res)
     })
     app.get('/validacao', function(req, res) {
