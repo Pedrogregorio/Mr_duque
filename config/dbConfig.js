@@ -16,14 +16,9 @@ const connMysql = function(err) {
         } else {
             throw err;
         }
-    });
-    connection.connect(function(err) {
-        if (err) {
-          console.error('error connecting: ' + err.stack);
-          return;
-        }
-      })
-      return connection    
+    }) 
+    
+    return connection    
 }
 
 module.exports = function () {
