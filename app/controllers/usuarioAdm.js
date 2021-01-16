@@ -2,6 +2,7 @@ let agente_banco = {}
 let status_banco = {}
 let usuario_banco = {}
 
+const excel = require('exceljs')
 
 const bancos = [
    {
@@ -2102,6 +2103,64 @@ function nomeBanco(result, id) {
 }
 
 
+function downloadExcel(res, customers, fields) {  
+  const jsonCustomers = JSON.parse(JSON.stringify(customers));
+  // console.log(jsonCustomers);
+  /**
+    [ { id: 1, address: 'Jack Smith', age: 23, name: 'Massachusetts' },
+    { id: 2, address: 'Adam Johnson', age: 27, name: 'New York' },
+    { id: 3, address: 'Katherin Carter', age: 26, name: 'Washington DC' },
+    { id: 4, address: 'Jack London', age: 33, name: 'Nevada' },
+    { id: 5, address: 'Jason Bourne', age: 36, name: 'California' } ]
+  */
+  
+  let workbook = new excel.Workbook(); //creating workbook
+  let worksheet = workbook.addWorksheet('Customers'); //creating worksheet
+ 
+  //  WorkSheet Header
+  worksheet.columns = [
+    { header: 'Numero Proposta', key: 'numero_proposta', width: 10 },
+    { header: 'Nome Cliente', key: 'nome_cliente', width: 30 },
+    { header: 'CPF', key: 'cpf_cliente', width: 30},
+    { header: 'Valor Proposta', key: 'valor_proposta', width: 30},
+    { header: 'Valor Parcela', key: 'parcela_proposta', width: 30},
+    { header: 'Banco Portado', key: 'nome_banco', width: 30},
+    { header: 'Data Inclusao Proposta', key: 'data_inclusao', width: 30},
+    { header: 'Agente Banco', key: 'nome_agente', width: 30},
+    { header: 'Status Proposta', key: 'nome_status', width: 30}
+  ];
+ 
+  // Add Array Rows
+  worksheet.addRows(jsonCustomers);
+ 
+  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  res.setHeader('Content-Disposition', 'attachment; filename=' + 'customer.xlsx');
+  
+  return workbook.xlsx.write(res)
+        .then(function() {
+              res.status(200).end()
+        });
+}
+
+
+function allRejected(arr) {
+  var contador = {}
+  if (arr) {
+    for (var item of arr) { 
+      if (item) {
+        if (contador[item.responsavel] === undefined) {
+          console.log(contador)
+          contador[item.responsavel] = arr.filter(function(item2) {
+            return item.responsavel === item2.responsavel
+          }).length;
+        }
+      }
+    }
+  }
+  return contador;
+}
+
+
 function autenticarUsuario(req, res) {
   if(req.session.autorizado !== true){
       var validacao = [{msg:"Usuario Nao Logado"}]
@@ -2118,9 +2177,15 @@ module.exports.iniciaPage = function(app, req, res) {
     if(req.query.msg !== ""){
       msg = req.query.msg
     }
+  
+  var notificacao
   const usuario = req.session.nome
   const conn = app.config.dbConfig
   const usuarioAdmDAO = new app.app.models.usuarioAdmDAO(conn)
+  // usuarioAdmDAO.quantDecontratos(function(err, contratos) {
+  //   notificacao = allRejected(contratos)
+  //   console.log(notificacao)
+  // })
   usuarioAdmDAO.getAgente(function(err, agente) {  agente_banco = agente })
   usuarioAdmDAO.getStatus(function(err, status) { status_banco = status })
   usuarioAdmDAO.iniciaPage(function(err, result) {
@@ -2191,19 +2256,21 @@ module.exports.editarClientes = function(app, req, res) {
    })
 }
 
-module.exports.cadastrarLog = function(app, req, res) {
-   const dadosForm = req.body
-   const conn = app.config.dbConfig
-   const usuarioAdmDAO = new app.app.models.usuarioAdmDAO(conn)
-   usuarioAdmDAO.cadastrarLog(dadosForm, function(err, result) {
-      if (err) {
-         res.send(err)
-      }else if(result != undefined){
-         res.redirect('/dashboardAdm?msg=log_cadastrado')
-      } else{
-         res.redirect('/dashboardAdm?msg=log_nao_cadastrado')
-      }
-   })
+module.exports.downloadExcel = function (app, req, res) {
+  const dadosForm = req.body
+  let id = dadosForm.id.join()
+  const conn = app.config.dbConfig
+  const usuarioAdmDAO = new app.app.models.usuarioAdmDAO(conn)
+  usuarioAdmDAO.downloadExcel(id, function (err, customers, fields) {
+    console.log(customers)
+    if(customers == undefined){
+      console.log(err)
+    }
+    for (let i = 0; i < customers.length; i++) {
+      nomeBanco(customers[i], customers[i].banco_portado)
+   }
+    downloadExcel(res, customers, fields)
+  })  
 }
 
 module.exports.cadastrarUsuario = function(app, req, res) {
@@ -2228,28 +2295,8 @@ module.exports.manager = function (app, req, res) {
   const conn = app.config.dbConfig
   const usuarioAdmDAO =  new app.app.models.usuarioAdmDAO(conn)
   const usuario = req.session.nome
-  
-  usuarioAdmDAO.getUsuario(function(err, result) { usuario_banco = result })
-  usuarioAdmDAO.getStatus(function(err, result) { status_banco = result })
-  usuarioAdmDAO.getAgente(function(err, result) { 
-     
-      agente_banco = result 
-      res.render('dashboardAdm/template/maneger', {status_maneger: status_banco, usuario_maneger: usuario_banco, agente_maneger: agente_banco})
-   })
-}
-
-module.exports.cadastrarStatus = function(app, req, res) {
-   const dadosForm = req.body
-   const conn = app.config.dbConfig
-   const usuarioAdmDAO = new app.app.models.usuarioAdmDAO(conn)
-   usuarioAdmDAO.cadastrarStatus(dadosForm, function(err, result) {
-      if (err) {
-         res.send(err)
-      }else if(result != undefined){
-         res.redirect('/dashboardAdm?msg=status_cadastrado')
-      } else {
-         res.redirect('/dashboardAdm?msg=status_nao_cadastrado')
-      }
+  usuarioAdmDAO.getUsuario(function(err, result) { 
+      res.render('dashboardAdm/template/maneger', {usuario_maneger: result})
    })
 }
 

@@ -74,3 +74,13 @@
         </table>
         <% } %>
     </div>
+    <div class="uk-margin">
+        <form action="/downloadExcel" method="POST">
+        <% for (let i = 0; i < dados.length; i++) { %>
+            <input type="hidden" name="id" value="<%= dados[i].id %>">
+        <% } %>
+        <button class="btn-bb btn-bb-verde"> Download Excel</button>
+    </form>
+    </div>
+    
+    

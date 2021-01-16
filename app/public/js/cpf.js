@@ -1,3 +1,10 @@
+function dataLimite() {
+    var data = document.getElementById('data').value;
+    var today = new Date(data);
+    novaData = today.toISOString().split('T')[0];
+    document.getElementsByName("data_f_inclusao")[0].setAttribute('min', novaData);   
+}
+
 function is_cpf (c) {
 
     if((c = c.replace(/[^\d]/g,"")).length != 11)

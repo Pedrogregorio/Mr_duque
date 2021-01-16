@@ -21,6 +21,14 @@
                     <% } %>
                 </select>
             </div>
+            <div class="uk-margin uk-width-1-2@s">
+                <label class="uk-form-label" for="form-stacked-text">Data inicio inclusao</label>
+                <input class="uk-input" type="date" id="data" onblur="dataLimite()" name="data_i_inclusao" placeholder="Data da Inclusao:">
+            </div>
+            <div class="uk-margin uk-width-1-2@s">
+                <label class="uk-form-label" for="form-stacked-text">Data final inclusao</label>
+                <input class="uk-input" type="date" name="data_f_inclusao" placeholder="Data da Inclusao:">
+            </div>
             <button class="btn-bb btn-bb-laranja uk-align-center" type="submit">Consultar Clientes<span class="uk-margin-small-right" uk-icon="database"></span></button> 
             <button class="btn-bb btn-bb-azul uk-align-center" type="button" href="#modal-cadastro" uk-toggle>Cadastra Cliente <span class="uk-margin-small-right" uk-icon="plus"></span></button>
         </form>

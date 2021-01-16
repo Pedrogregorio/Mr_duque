@@ -8,6 +8,10 @@ usuarioAdmDAO.prototype.getAgente = function(callback) {
     this._connection.query(query, callback)
 }
 
+usuarioAdmDAO.prototype.downloadExcel = function(id, callback) {
+    this._connection.query("SELECT DISTINCT tb_cliente.id, tb_cliente.banco_portado, tb_cliente.responsavel, tb_cliente.nome_cliente, tb_cliente.cpf_cliente, tb_cliente.numero_proposta, tb_cliente.valor_proposta, tb_cliente.parcela_proposta, tb_cliente.data_inclusao, tb_agente.nome_agente, tb_status_proposta.nome_status FROM `tb_cliente` JOIN `tb_agente` ON tb_cliente.id_agente_banco = tb_agente.id_agente_banco JOIN `tb_status_proposta` on tb_cliente.id_status_proposta = tb_status_proposta.id_status_proposta WHERE tb_cliente.id in ("+ id +")", callback)
+}
+
 usuarioAdmDAO.prototype.getStatus = function(callback) {
     const query = 'SELECT * FROM `tb_status_proposta` ORDER BY banco'
     this._connection.query(query, callback)
@@ -15,6 +19,11 @@ usuarioAdmDAO.prototype.getStatus = function(callback) {
 
 usuarioAdmDAO.prototype.iniciaPage = function(callback) {
     const query = "SELECT tb_cliente.id, tb_cliente.banco_portado, tb_cliente.responsavel, max(tb_historico_cliente.data_modificacao) as data_modificacao, tb_cliente.nome_cliente, tb_cliente.cpf_cliente, tb_cliente.numero_proposta, tb_cliente.valor_proposta, tb_cliente.parcela_proposta, tb_cliente.data_inclusao, tb_agente.nome_agente, tb_status_proposta.nome_status FROM `tb_cliente` JOIN `tb_agente` ON tb_cliente.id_agente_banco = tb_agente.id_agente_banco JOIN `tb_historico_cliente` ON tb_historico_cliente.id_cliente = tb_cliente.id JOIN `tb_status_proposta` on tb_cliente.id_status_proposta = tb_status_proposta.id_status_proposta GROUP BY ID ORDER BY tb_historico_cliente.data_modificacao"
+    this._connection.query(query, callback)
+}
+
+usuarioAdmDAO.prototype.quantDecontratos = function(callback) {
+    const query = "SELECT tb_cliente.id, tb_cliente.responsavel, MAX( tb_historico_cliente.data_modificacao ) AS data_modificacao FROM `tb_cliente` JOIN `tb_historico_cliente` ON tb_historico_cliente.id_cliente = tb_cliente.id GROUP BY ID ORDER BY tb_historico_cliente.data_modificacao"
     this._connection.query(query, callback)
 }
 
@@ -76,9 +85,16 @@ usuarioAdmDAO.prototype.deletarUsuario = function (_id, callback) {
     this._connection.query(query, callback)
 }
 
-usuarioAdmDAO.prototype.consultarClientes = function(dadosForm, callback){   
-    const query = 'SELECT DISTINCT tb_cliente.id, tb_cliente.banco_portado, max(tb_historico_cliente.data_modificacao) as data_modificacao, tb_cliente.responsavel, tb_cliente.nome_cliente, tb_cliente.cpf_cliente, tb_cliente.numero_proposta, tb_cliente.valor_proposta, tb_cliente.parcela_proposta, tb_cliente.data_inclusao, tb_agente.nome_agente, tb_status_proposta.nome_status FROM `tb_cliente` JOIN `tb_agente` ON tb_cliente.id_agente_banco = tb_agente.id_agente_banco JOIN `tb_historico_cliente` ON tb_historico_cliente.id_cliente = tb_cliente.id JOIN `tb_status_proposta` on tb_cliente.id_status_proposta = tb_status_proposta.id_status_proposta WHERE nome_cliente LIKE "%'+ dadosForm.nome_cliente +'%" and cpf_cliente LIKE "%'+ dadosForm.cpf_cliente +'%" and tb_cliente.id_agente_banco LIKE "%'+ dadosForm.id_agente_banco +'%" GROUP BY ID'    
-    this._connection.query(query, callback)
+usuarioAdmDAO.prototype.consultarClientes = function(dadosForm, callback){
+    if(dadosForm.data_i_inclusao == '' && dadosForm.data_f_inclusao == ''){
+        const query = 'SELECT DISTINCT tb_cliente.id, tb_cliente.banco_portado, max(tb_historico_cliente.data_modificacao) as data_modificacao, tb_cliente.responsavel, tb_cliente.nome_cliente, tb_cliente.cpf_cliente, tb_cliente.numero_proposta, tb_cliente.valor_proposta, tb_cliente.parcela_proposta, tb_cliente.data_inclusao, tb_agente.nome_agente, tb_status_proposta.nome_status FROM `tb_cliente` JOIN `tb_agente` ON tb_cliente.id_agente_banco = tb_agente.id_agente_banco JOIN `tb_historico_cliente` ON tb_historico_cliente.id_cliente = tb_cliente.id JOIN `tb_status_proposta` on tb_cliente.id_status_proposta = tb_status_proposta.id_status_proposta WHERE nome_cliente LIKE "%'+ dadosForm.nome_cliente +'%" and cpf_cliente LIKE "%'+ dadosForm.cpf_cliente +'%" and tb_cliente.id_agente_banco LIKE "%'+ dadosForm.id_agente_banco +'%" GROUP BY ID'    
+        this._connection.query(query, callback)
+    }else{
+        const query = 'SELECT DISTINCT tb_cliente.id, tb_cliente.banco_portado, max(tb_historico_cliente.data_modificacao) as data_modificacao, tb_cliente.responsavel, tb_cliente.nome_cliente, tb_cliente.cpf_cliente, tb_cliente.numero_proposta, tb_cliente.valor_proposta, tb_cliente.parcela_proposta, tb_cliente.data_inclusao, tb_agente.nome_agente, tb_status_proposta.nome_status FROM `tb_cliente` JOIN `tb_agente` ON tb_cliente.id_agente_banco = tb_agente.id_agente_banco JOIN `tb_historico_cliente` ON tb_historico_cliente.id_cliente = tb_cliente.id JOIN `tb_status_proposta` on tb_cliente.id_status_proposta = tb_status_proposta.id_status_proposta WHERE nome_cliente LIKE "%'+ dadosForm.nome_cliente +'%" and cpf_cliente LIKE "%'+ dadosForm.cpf_cliente +'%" and tb_cliente.id_agente_banco LIKE "%'+ dadosForm.id_agente_banco +'%" and tb_cliente.data_inclusao BETWEEN "'+ dadosForm.data_i_inclusao +'" and "'+ dadosForm.data_f_inclusao +'" GROUP BY ID'
+        this._connection.query(query, callback)
+    }   
+
+    
 }
 
 usuarioAdmDAO.prototype.conAjax = function(callback) {

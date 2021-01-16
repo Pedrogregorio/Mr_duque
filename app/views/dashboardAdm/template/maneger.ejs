@@ -1,4 +1,4 @@
-<a href="/dashboardAdm" class="btn-bb btn-bb-azul" uk-icon="arrow-left"> Voltar </a>
+<a href="/dashboardAdm" class="btn-bb btn-bb-azul uk-button"> Voltar </a> 
 <div class="uk-overflow-auto">
     <div>    
     <table class="uk-table uk-table-responsive uk-table-divider">
@@ -28,34 +28,7 @@
                     </td>
                 </tr>   
                 <% } %>
-                <tr>
-                    <td><h1>Agente:</h1></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <% for (let i = 0; i < agente_maneger.length; i++) { %>
-                <tr>
-                    <td><%= agente_maneger[i].nome_agente %>  </td>
-                    <td><%= agente_maneger[i].banco %></td>
-                    <td>
-                        <a href="/deletar_agente?id=<%= agente_maneger[i].id_agente_banco %>" class="btn-bb-vermelho-del" uk-icon="icon: trash"></a>
-                    </td>
-                </tr>
-                <% } %>
-        <tr>
-            <td><h1>Status:</h1></td>
-            <td></td>
-            <td></td>
-        </tr>
-                <% for (let i = 0; i < status_maneger.length; i++) { %>
-                    <tr>
-                        <td><%= status_maneger[i].nome_status %></td>
-                        <td><%= status_maneger[i].banco %></td>
-                        <td>
-                            <a href="/deletar_status?id=<%= status_maneger[i].id_status_proposta %>" class="btn-bb-vermelho-del" uk-icon="icon: trash"></a>
-                        </td>
-                    </tr>
-                <% } %>
+                
             </tbody>
         </table>    
     </div>

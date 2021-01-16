@@ -27,6 +27,13 @@ module.exports = function(app) {
     app.get('/deletar_cliente', function(req, res) {
         app.app.controllers.usuarioAdm.deletarCliente(app, req, res)
     })
+
+    app.post('/downloadExcel', function(req, res) {
+        app.app.controllers.usuarioAdm.downloadExcel(app, req, res)
+    })
+    app.get('/downloadExcel', function(req, res) {
+        app.app.controllers.usuarioAdm.downloadExcel(app, req, res)
+    })
     
     app.post('/conAjax', function(req, res) {
         app.app.controllers.usuarioAdm.conAjax(app, req, res)
