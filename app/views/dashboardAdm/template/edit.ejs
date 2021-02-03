@@ -49,8 +49,10 @@
             </select>
         </div>
         <div class="uk-margin uk-width-1-1">
-            <label class="uk-form-label" for="form-stacked-text">Status Proposta:</label>
-            <select class="uk-select" name="id_status_proposta" id="form-horizontal-select">
+            <label class="uk-form-label" for="form-stacked-text">Status da proposta</label>
+            <input class="uk-input" list="status" name="id_status_proposta" id="form-horizontal-select">
+            <datalist id="status">
+            
                 <% for (let j = 0; j < status.length; j++) { %>
                     
                     <% if (status[j].id_status_proposta == dados[i].id_status_proposta) { %>
@@ -59,8 +61,7 @@
                 <% } else { %>
                     <option value="<%= status[j].id_status_proposta %>"><%= status[j].nome_status %> - <%= status[j].banco %></option>
                 <% } } %>
-            </select>
-            
+            </datalist>
         </div>
         <div>
             <button class="btn-bb btn-bb-azul" type="submit">Salvar</button>

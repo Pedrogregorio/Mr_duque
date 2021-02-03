@@ -2258,7 +2258,13 @@ module.exports.editarClientes = function(app, req, res) {
 
 module.exports.downloadExcel = function (app, req, res) {
   const dadosForm = req.body
-  let id = dadosForm.id.join()
+  let id
+  if(dadosForm.length > 2){
+    id = dadosForm.id.join()
+  }else{
+     id = dadosForm.id
+  }
+  
   const conn = app.config.dbConfig
   const usuarioAdmDAO = new app.app.models.usuarioAdmDAO(conn)
   usuarioAdmDAO.downloadExcel(id, function (err, customers, fields) {

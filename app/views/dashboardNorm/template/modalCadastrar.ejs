@@ -48,11 +48,12 @@
                 </div>
                 <div class="uk-margin uk-width-1-1">
                     <label class="uk-form-label" for="form-stacked-text">Status da proposta</label>
-                    <select class="uk-select" name="id_status_proposta" id="form-horizontal-select">
+                    <input class="uk-input" list="status" name="id_status_proposta" id="form-horizontal-select">
+                    <datalist id="status">
                         <% for (let i = 0; i < status.length; i++) { %>
                             <option value="<%= status[i].id_status_proposta %>"><%= status[i].nome_status %> - <%= status[i].banco %></option>
                         <% } %>
-                    </select>
+                    </datalist>
                 </div>
                 
             
