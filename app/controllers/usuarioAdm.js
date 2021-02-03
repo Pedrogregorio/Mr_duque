@@ -2149,8 +2149,7 @@ function allRejected(arr) {
     for (var item of arr) { 
       if (item) {
         if (contador[item.responsavel] === undefined) {
-          console.log(contador)
-          contador[item.responsavel] = arr.filter(function(item2) {
+          contador[item.responsavel].prioridade = arr.filter(function(item2) {
             return item.responsavel === item2.responsavel
           }).length;
         }
@@ -2182,10 +2181,6 @@ module.exports.iniciaPage = function(app, req, res) {
   const usuario = req.session.nome
   const conn = app.config.dbConfig
   const usuarioAdmDAO = new app.app.models.usuarioAdmDAO(conn)
-  // usuarioAdmDAO.quantDecontratos(function(err, contratos) {
-  //   notificacao = allRejected(contratos)
-  //   console.log(notificacao)
-  // })
   usuarioAdmDAO.getAgente(function(err, agente) {  agente_banco = agente })
   usuarioAdmDAO.getStatus(function(err, status) { status_banco = status })
   usuarioAdmDAO.iniciaPage(function(err, result) {
@@ -2201,6 +2196,7 @@ module.exports.iniciaPage = function(app, req, res) {
 }
 
 module.exports.cadastraCliente = function(app, req, res) {
+  try {
     const data = new Date
     const dadosForm = req.body
     dadosForm.responsavel = req.session.nome
@@ -2208,6 +2204,7 @@ module.exports.cadastraCliente = function(app, req, res) {
     const conn = app.config.dbConfig
     const usuarioAdmDAO = new app.app.models.usuarioAdmDAO(conn)
     usuarioAdmDAO.cadastraCliente(dadosForm, function(err, result){
+      console.log(result)
       dadosForm.id = result.insertId
       usuarioAdmDAO.inserirHistorico(dadosForm, function() {
          if (err) {
@@ -2218,7 +2215,10 @@ module.exports.cadastraCliente = function(app, req, res) {
             res.redirect('/dashboardAdm?msg=cliente_nao_cadastrado')
          }
       })
-   })
+   }) 
+  } catch (error) {
+    console.log('rrtrrdtrd')
+  }
 }
 
 module.exports.historico = function(app, req, res) {

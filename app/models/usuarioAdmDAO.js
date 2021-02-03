@@ -29,6 +29,7 @@ usuarioAdmDAO.prototype.quantDecontratos = function(callback) {
 
 usuarioAdmDAO.prototype.cadastraCliente = function (dadosForm, callback) {
     const query = 'INSERT INTO `tb_cliente`(`nome_cliente`, `cpf_cliente`, `numero_proposta`, `valor_proposta`, `parcela_proposta`, `banco_portado`, `data_inclusao`, `responsavel`, `id_agente_banco`, `id_status_proposta`) VALUES ("'+dadosForm.nome_cliente+'", "'+dadosForm.cpf_cliente+'", "'+dadosForm.numero_proposta+'", "'+dadosForm.valor_proposta+'", "'+dadosForm.valor_parcela+'", "'+dadosForm.banco_portado+'", "'+dadosForm.data_inclusao+'", "'+dadosForm.responsavel+'", '+dadosForm.id_agente_banco+', '+dadosForm.id_status_proposta+');'
+    console.log(query)
     this._connection.query(query, callback)
 }
 

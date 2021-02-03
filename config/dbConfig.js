@@ -19,7 +19,7 @@ const connMysql = function(err) {
     });
     connection.connect(function(err) {
         if (err) {
-          console.error('error connecting pohhhhhhhhhhha: ' + err.stack);
+          console.error('erro na conexão: ' + err.stack);
           return;
         }
       })
