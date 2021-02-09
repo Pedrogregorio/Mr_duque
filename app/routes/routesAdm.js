@@ -11,6 +11,22 @@ module.exports = function(app) {
     app.get('/dashboardAdm', function(req, res) {
         app.app.controllers.usuarioAdm.iniciaPage(app, req, res)
     })
+
+    app.get('/listaLote', function (req, res) {
+        app.app.controllers.usuarioAdm.listaLote(app, req, res)
+    })
+
+    app.post('/achar_lote', function (req, res) {    
+        app.app.controllers.usuarioAdm.acharLote(app, req, res)
+    })
+    
+    app.post('/criarLote', function (req, res) {    
+        app.app.controllers.usuarioAdm.criaLote(app, req, res)
+    })
+
+    app.post('/lote_clientes', function (req, res) {
+        app.app.controllers.usuarioAdm.selecionaLote(app, req, res)
+    })
     
     app.get('/dashboard/cadastra_usuario', function(req, res) {
         res.redirect('/dashboard')
@@ -33,6 +49,9 @@ module.exports = function(app) {
     })
     app.get('/downloadExcel', function(req, res) {
         app.app.controllers.usuarioAdm.downloadExcel(app, req, res)
+    })
+    app.get('/lote', function(req, res) {
+        app.app.controllers.usuarioAdm.lote(app, req, res)
     })
     
     app.post('/conAjax', function(req, res) {

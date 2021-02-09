@@ -1,0 +1,79 @@
+
+    <% if (dados.length > 0 ) { %>
+        <p class="uk-h4">Lote dia: <%= dia %> <a uk-icon="uk-icon: close" onclick="fecharTabela()"> X </a></p>
+<div class="uk-overflow-auto uk-text-truncate">        
+        <table class="uk-table uk-table-small uk-table-divider" id="table"> 
+            <thead>
+                <tr class="uk-text-center">
+                    <th>Prioridade</th>
+                    <th>Numero Proposta:</th>
+                    <th>Responsavel</th>
+                    <th class="uk-table-expand">Nome Do Cliente:</th>
+                    <th class="uk-table-expand">CPF:</th>
+                    <th>Agente:</th>
+                    <th>Valor Proposta:</th>
+                    <th>Valor Parcela:</th>
+                    <th>Banco Portado:</th>
+                    <th>Data Inclusao:</th>
+                    <th>Status:</th>
+                    <th>Ações:</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (let i = 0; i < dados.length; i++) { %>
+                    <%
+                        var date = new Date()
+                        var data_banco = dados[i].data_modificacao
+                        var notificacao
+                        var prioridade
+                        function datarest(date, data_formatada) {
+                            var utc1 = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+                            var utc2 = Date.UTC(data_formatada.getFullYear(), data_formatada.getMonth(), data_formatada.getDate());
+                            return Math.floor((utc1 - utc2) / ( 1000 * 60 * 60 * 24) );
+                        }
+                        var cont = datarest(date, data_banco)
+                        if(cont <= 2){
+                            notificacao = 'uk-label-success'
+                            prioridade = 'verde'
+                        }else if (cont == 3 ) {
+                            notificacao = 'uk-label-warning'
+                            prioridade = 'laranja'
+                        }else if (cont >= 4) {
+                            notificacao = 'uk-label-danger'
+                            prioridade = 'vermelho'
+                        }
+                        var numero_proposta = dados[i].numero_proposta
+                        var responsavel = dados[i].responsavel
+                        var nome_cliente = dados[i].nome_cliente
+                        var cpf_cliente = dados[i].cpf_cliente
+                        var nome_agente = dados[i].nome_agente
+                        var valor_proposta = dados[i].valor_proposta
+                        var valor_parcela = dados[i].parcela_proposta
+                        var banco_portado = dados[i].nome_banco
+                        var data_inclusao = dados[i].data_inclusao
+                        var nome_status = dados[i].nome_status
+
+                    %>
+                <tr id="tr-cliente">
+                    <td><span class="uk-label <%= notificacao %>">Prioridade</span></td>
+                    <td><a href="/historico?id=<%= dados[i].id %>"><%= numero_proposta %></a></td>
+                    <td><%= responsavel %></td>
+                    <td><%= nome_cliente %></td>
+                    <td><%= cpf_cliente %></td>
+                    <td><%= nome_agente %></td>
+                    <td><%= valor_proposta %></td>
+                    <td><%= valor_parcela %></td>
+                    <td><%= banco_portado %></td>
+                    <td style="font-size: .79rem"><%= data_inclusao %></td>
+                    <td><%= nome_status %></td>
+                    <td>
+                        <a href="/editarClientes?id=<%= dados[i].id %>" class="btn-bb-verde-del" uk-icon="icon: file-edit" uk-toggle></a>    
+                        <a href="/deletar_cliente?id=<%= dados[i].id %>" class="btn-bb-vermelho-del" uk-icon="icon: trash"></a>
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    
+</div>
+<% } %>

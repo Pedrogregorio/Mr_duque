@@ -3,6 +3,7 @@ let status_banco = {}
 let usuario_banco = {}
 
 const excel = require('exceljs')
+const { query } = require('express-validator')
 
 const bancos = [
    {
@@ -2217,8 +2218,77 @@ module.exports.cadastraCliente = function(app, req, res) {
       })
    }) 
   } catch (error) {
-    console.log('rrtrrdtrd')
+    console.log(error)
   }
+}
+
+module.exports.acharLote = function (app, req, res) {
+  autenticarUsuario(req, res)
+  const usuario = req.session.nome
+  const conn = app.config.dbConfig
+  let clientes = []
+  let id = req.body.id
+  const usuarioAdmDAO = new app.app.models.usuarioAdmDAO(conn)
+  usuarioAdmDAO.listaCliente(function(err, cliente) { clientes = cliente })
+  usuarioAdmDAO.acharLote(id, function(err, result) {
+    res.render('dashboardAdm/template/acharLote', {result:result})    
+  })
+}
+
+module.exports.selecionaLote = function (app, req, res) {
+  autenticarUsuario(req, res)
+  const conn = app.config.dbConfig
+  let lote = req.body.data
+  const usuario = req.session.nome
+  const usuarioAdmDAO = new app.app.models.usuarioAdmDAO(conn)
+  usuarioAdmDAO.getAgente(function(err, agente) {  return agente_banco = agente })
+  usuarioAdmDAO.getStatus(function(err, status) { return status_banco = status })
+  usuarioAdmDAO.selecionaLote(lote, function(err, result) {
+
+    if(err){
+      return res.status(400).send(err)
+    }
+    for (let i = 0; i < result.length; i++) {
+      nomeBanco(result[i], result[i].banco_portado)
+    }
+    res.render('dashboardAdm/template/clientes_lote',{dia: lote, dados:result})
+  })
+}
+
+module.exports.lote = function (app, req, res) {
+  autenticarUsuario(req, res)
+  const usuario = req.session.nome
+  const conn = app.config.dbConfig
+  let clientes = []
+  const usuarioAdmDAO = new app.app.models.usuarioAdmDAO(conn)
+  usuarioAdmDAO.listaCliente(function(err, cliente) { clientes = cliente })
+  usuarioAdmDAO.listaLote(function(err, result) {
+    res.render('dashboardAdm/dash', {nome:usuario, clientes: clientes, dados:{}, page: './template/lote.ejs', menu:'./template/menu.ejs', result:result})    
+  })
+}
+
+module.exports.criaLote = function(app, req, res){
+  autenticarUsuario(req, res)
+  const dadosForm = req.body
+  const usuario = req.session.nome
+  let clientes = []
+  const conn = app.config.dbConfig
+  const usuarioAdmDAO = new app.app.models.usuarioAdmDAO(conn)
+  
+  let valueSql = ''; // irá armazenar a estrutura do VALUE dentro do loop
+  let newArrayExemplo = []; // array que ira armazenar os múltiplos registros
+  dadosForm.lote.forEach(item => {
+      valueSql = '("' + String(item.cliente) + '", "' + String(item.protocolo) + '", "' + String(dadosForm.date) + '")'
+      newArrayExemplo.push(valueSql)
+  })
+  let query = newArrayExemplo.toString()
+  usuarioAdmDAO.listaCliente(function(err, cliente) { return clientes = cliente })
+  usuarioAdmDAO.criarLote(query, function (err, resultado) {
+    if (err) { return res.status(500).send(err) }
+    usuarioAdmDAO.listaLote(function(err, resultado) {
+      res.render('dashboardAdm/template/lote',{clientes: clientes, result:resultado})  
+    })
+  })
 }
 
 module.exports.historico = function(app, req, res) {

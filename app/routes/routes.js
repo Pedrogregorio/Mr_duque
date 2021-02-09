@@ -16,11 +16,12 @@ module.exports = function(app) {
     function(req, res) {
         controllers.validacao(app, req, res)
     })
+    
     app.get('/validacao', function(req, res) {
         
         res.redirect('/')
     })
-
+    
     app.get('/sair', function(req, res) {
         req.session.destroy((err) => {
             res.render('index', {validacao:{}})

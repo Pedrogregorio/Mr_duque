@@ -1,0 +1,53 @@
+<script src="js/criarLote.js"></script>
+
+<div class="uk-margin uk-width-1-2 uk-align-center" id="f">
+    <p class="uk-h2 uk-text-center">Adicionar um lote de contratos enviados para o correio</p>
+    <div id="form">
+        <form action="">
+            <div class="uk-margin">
+                <input class="uk-input uk-form-width-large" list="status" id="cliente" id="form-horizontal-select" placeholder="Cliente">
+                <datalist id="status">
+                    <% for (let i = 0; i < clientes.length; i++) { %>
+                        <option value="<%= clientes[i].id %>"><%= clientes[i].cpf_cliente %> | <%= clientes[i].nome_cliente %> | <%= clientes[i].numero_proposta %></option>
+                    <% } %>
+                </datalist>
+
+            </div>
+            <div class="uk-margin">
+                <input id="protocolo" class="uk-input uk-form-width-large" type="text" placeholder="Codigo de Rastreio">
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="teste">Data do envio</label>
+                <input class="uk-input uk-form-width-medium" type="date" name="" id="data_envio">    
+            </div>
+        </form>
+    </div>
+    <button class="btn-bb btn-bb-verde" onclick="addUsuario()"> + Add usuario</button>
+    
+    <button class="btn-bb btn-bb-azul" onclick="addLote()"> + Criar Lote</button>
+    <hr>
+    <div class="uk-margin">
+        <input class="uk-input" id="pesquisa" type="text" list="status" placeholder="Pesquisar...">
+        <datalist id="status">
+            <% for (let i = 0; i < clientes.length; i++) { %>
+                <option value="<%= clientes[i].id %>"><%= clientes[i].cpf_cliente %> | <%= clientes[i].nome_cliente %> | <%= clientes[i].numero_proposta %></option>
+            <% } %>
+        </datalist>
+        
+        <button class="uk-button uk-button-primary" onclick="acharLote()">Pesquisar</button>
+    </div>
+    <hr>
+    <div class="uk-margin" id="acharLote">
+        
+        <div class="uk-grid-column-small uk-grid-row-large uk-child-width-1-3@s uk-text-center" uk-grid>
+            <% for(let i = 0; i < result.length; i++) {%>
+            <div>
+                <div class="uk-card uk-card-default uk-card-body"><%= result[i].data_envio %></div>
+                <button value="<%= result[i].data_envio %>" class="uk-button uk-button-secondary" onclick="showLote(this.value)">Ver Lote</button>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+<div class="uk-margin" id="tabela"></div>  
+

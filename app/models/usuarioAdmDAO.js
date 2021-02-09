@@ -12,6 +12,16 @@ usuarioAdmDAO.prototype.downloadExcel = function(id, callback) {
     this._connection.query("SELECT DISTINCT tb_cliente.id, tb_cliente.banco_portado, tb_cliente.responsavel, tb_cliente.nome_cliente, tb_cliente.cpf_cliente, tb_cliente.numero_proposta, tb_cliente.valor_proposta, tb_cliente.parcela_proposta, tb_cliente.data_inclusao, tb_agente.nome_agente, tb_status_proposta.nome_status FROM `tb_cliente` JOIN `tb_agente` ON tb_cliente.id_agente_banco = tb_agente.id_agente_banco JOIN `tb_status_proposta` on tb_cliente.id_status_proposta = tb_status_proposta.id_status_proposta WHERE tb_cliente.id in ("+ id +")", callback)
 }
 
+usuarioAdmDAO.prototype.listaCliente = function(callback) {
+    const query = "SELECT * FROM tb_cliente"
+    this._connection.query(query, callback)
+}
+
+usuarioAdmDAO.prototype.criarLote = function (values, callback) {
+    const query = 'INSERT INTO `tb_lote`(`id_cliente`, `num_rastreio`, `data_envio`) VALUES '+values
+    this._connection.query(query, callback)
+}
+
 usuarioAdmDAO.prototype.getStatus = function(callback) {
     const query = 'SELECT * FROM `tb_status_proposta` ORDER BY banco'
     this._connection.query(query, callback)
@@ -29,7 +39,16 @@ usuarioAdmDAO.prototype.quantDecontratos = function(callback) {
 
 usuarioAdmDAO.prototype.cadastraCliente = function (dadosForm, callback) {
     const query = 'INSERT INTO `tb_cliente`(`nome_cliente`, `cpf_cliente`, `numero_proposta`, `valor_proposta`, `parcela_proposta`, `banco_portado`, `data_inclusao`, `responsavel`, `id_agente_banco`, `id_status_proposta`) VALUES ("'+dadosForm.nome_cliente+'", "'+dadosForm.cpf_cliente+'", "'+dadosForm.numero_proposta+'", "'+dadosForm.valor_proposta+'", "'+dadosForm.valor_parcela+'", "'+dadosForm.banco_portado+'", "'+dadosForm.data_inclusao+'", "'+dadosForm.responsavel+'", '+dadosForm.id_agente_banco+', '+dadosForm.id_status_proposta+');'
-    console.log(query)
+    this._connection.query(query, callback)
+}
+
+usuarioAdmDAO.prototype.listaLote = function (callback) {
+    const query = 'SELECT * FROM `tb_lote` GROUP BY data_envio ORDER BY `tb_lote`.`data_envio` ASC'
+    this._connection.query(query, callback)
+}
+
+usuarioAdmDAO.prototype.acharLote = function (id_cliente, callback) {
+    const query = 'SELECT * FROM `tb_lote`  WHERE id_cliente = '+ id_cliente +' GROUP BY data_envio ORDER BY `tb_lote`.`data_envio` ASC'
     this._connection.query(query, callback)
 }
 
@@ -100,7 +119,11 @@ usuarioAdmDAO.prototype.consultarClientes = function(dadosForm, callback){
 
 usuarioAdmDAO.prototype.conAjax = function(callback) {
     const query = 'SELECT DISTINCT tb_cliente.id, tb_cliente.banco_portado, max(tb_historico_cliente.data_modificacao) as data_modificacao, tb_cliente.responsavel, tb_cliente.nome_cliente, tb_cliente.cpf_cliente, tb_cliente.numero_proposta, tb_cliente.valor_proposta, tb_cliente.parcela_proposta, tb_cliente.data_inclusao, tb_agente.nome_agente, tb_status_proposta.nome_status FROM `tb_cliente` JOIN `tb_agente` ON tb_cliente.id_agente_banco = tb_agente.id_agente_banco JOIN `tb_historico_cliente` ON tb_historico_cliente.id_cliente = tb_cliente.id JOIN `tb_status_proposta` on tb_cliente.id_status_proposta = tb_status_proposta.id_status_proposta GROUP BY ID'
+    this._connection.query(query, callback)
+}
 
+usuarioAdmDAO.prototype.selecionaLote = function(data_envio, callback) {
+    const query = 'SELECT DISTINCT tb_cliente.id, tb_cliente.banco_portado, MAX(tb_historico_cliente.data_modificacao)as data_modificacao, tb_cliente.responsavel, tb_cliente.nome_cliente, tb_cliente.cpf_cliente, tb_cliente.numero_proposta, tb_cliente.valor_proposta, tb_cliente.parcela_proposta, tb_cliente.data_inclusao, tb_agente.nome_agente, tb_status_proposta.nome_status FROM `tb_cliente` JOIN `tb_lote` ON tb_lote.id_cliente = tb_cliente.id JOIN `tb_agente` ON tb_cliente.id_agente_banco = tb_agente.id_agente_banco JOIN `tb_historico_cliente` ON tb_historico_cliente.id_cliente = tb_cliente.id JOIN `tb_status_proposta` ON tb_cliente.id_status_proposta = tb_status_proposta.id_status_proposta WHERE tb_lote.data_envio = "'+ data_envio +'" GROUP BY ID'
     this._connection.query(query, callback)
 }
 

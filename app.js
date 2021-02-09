@@ -10,6 +10,7 @@ app.set('views', './app/views')
 
 app.use(bodyParser.urlencoded({ extended:true }))
 app.use(express.static('./app/public'))
+app.use(express.json())
 app.set('trust proxy', 1)
 app.use(expressSession({
     secret: '04259a2b4584100b53697b0fc14fdfad',
